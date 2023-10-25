@@ -31,29 +31,26 @@ function DrawerAppBar(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
-    setMobileOpen(() => !mobileOpen);
+    setMobileOpen((prevState) => !prevState);
   };
 
-
-  const drawer = () => {
-    return (
-      <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-        <Typography variant="h6" sx={{ my: 2 }} style={{color: 'black'}}>
-          Youtube Aggregator
-        </Typography>
-        <Divider />
-        <List>
-          {navItems.map((item) => (
-            <ListItem key={item} disablePadding>
-              <ListItemButton sx={{ textAlign: 'center', color: 'black' }}>
-                <ListItemText primary={item} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-    )
-  }
+  const drawer = (
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+      <Typography variant="h6" sx={{ my: 2 }}>
+        Youtube Aggregator
+      </Typography>
+      <Divider />
+      <List>
+        {navItems.map((item) => (
+          <ListItem key={item} disablePadding>
+            <ListItemButton sx={{ textAlign: 'center' }} href={`${item}`}>
+              <ListItemText primary={item} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
 
   const container = window !== undefined ? () => window().document.body : undefined;
 
@@ -61,41 +58,33 @@ function DrawerAppBar(props) {
     <Router>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-
-
         <AppBar component="nav">
           <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="start"
-                onClick={handleDrawerToggle}
-                sx={{ mr: 2, display: { sm: 'none' } }}
-              >
-                <MenuIcon />
-              </IconButton>
-
-              <Typography
-                variant="h6"
-                component="div"
-                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-              >
-                <Button href='/' sx={{ color: '#fff' }}>
-                  Youtube Aggregator
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            >
+              Youtube Aggregator
+            </Typography>
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+              {navItems.map((item) => (
+                <Button key={item} sx={{ color: '#fff' }} href={`/${item}`}>
+                  {item}
                 </Button>
-              </Typography>
-
-              <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                {navItems.map((item) => (
-                  <Button key={item} sx={{ color: '#fff' }} href={`${item}`}>
-                    {item}
-                  </Button>
-                ))}
-              </Box>
+              ))}
+            </Box>
           </Toolbar>
         </AppBar>
-
-        
         <nav>
           <Drawer
             container={container}
@@ -113,8 +102,6 @@ function DrawerAppBar(props) {
             {drawer}
           </Drawer>
         </nav>
-
-
         <Box component="main" sx={{ p: 3 }}>
           <Toolbar />
 
@@ -157,10 +144,10 @@ function DrawerAppBar(props) {
                 </Typography>
               )}
             />
-            <Route  path="/discord" component={DiscordPage} />
-            <Route  path="/youtube" component={YoutubePage} />
-            <Route  path='/tiktok' component={TikTokPage} />
-            <Route  path='/stream' component={StreamPage} />
+            <Route path="/discord" component={DiscordPage} />
+            <Route path="/youtube" component={YoutubePage} />
+            <Route path='/tiktok' component={TikTokPage} />
+            <Route path='/stream' component={StreamPage} />
           </Switch>
         </Box>
       </Box>
